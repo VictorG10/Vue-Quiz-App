@@ -2,6 +2,12 @@
   import { defineProps } from "vue";
 
   const { question } = defineProps(["question"]);
+
+  const emit = defineEmits(["selectOption"]);
+
+  const emitSelectedOption = (isCorrect) => {
+    emit("selectOption", isCorrect);
+  };
 </script>
 
 <template>
@@ -10,7 +16,12 @@
   </div>
 
   <div class="options-container">
-    <div class="option" v-for="option in question.options" :key="option.id">
+    <div
+      class="option"
+      v-for="option in question.options"
+      @click="emitSelectedOption(option.isCorrect)"
+      :key="option.id"
+    >
       <p class="option-label">{{ option.label }}</p>
       <div class="option-value">
         <p>{{ option.text }}</p>
@@ -54,5 +65,3 @@
     align-items: center;
   }
 </style>
-
-<!-- 5:26:53 -->
